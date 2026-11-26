@@ -42,6 +42,40 @@
     });
   }
 
+  document.querySelectorAll('.nav-dropdown').forEach(function (dropdown) {
+    var trigger = dropdown.querySelector('.nav-dropdown-toggle');
+    var menu = dropdown.querySelector('.nav-dropdown-menu');
+    if (!trigger || !menu) return;
+
+    var setOpen = function (open) {
+      dropdown.classList.toggle('is-open', open);
+      trigger.setAttribute('aria-expanded', String(open));
+    };
+
+    trigger.addEventListener('click', function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      setOpen(trigger.getAttribute('aria-expanded') !== 'true');
+    });
+
+    menu.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        setOpen(false);
+      });
+    });
+
+    document.addEventListener('click', function (event) {
+      if (!dropdown.contains(event.target)) setOpen(false);
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && dropdown.classList.contains('is-open')) {
+        setOpen(false);
+        trigger.focus();
+      }
+    });
+  });
+
   var reveals = document.querySelectorAll('.reveal');
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -79,7 +113,7 @@
   var lightbox = document.getElementById('lightbox');
 
   if (gallery && lightbox) {
-    var items = Array.prototype.slice.call(gallery.querySelectorAll('.gallery-item'));
+    var items = Array.prototype.slice.call(gallery.querySelectorAll('.gallery-item:not([hidden])'));
     var imgEl = document.getElementById('lightbox-img');
     var counter = document.getElementById('lightbox-counter');
     var closeBtn = document.getElementById('lightbox-close');
@@ -88,6 +122,14 @@
     var total = items.length;
     var current = 0;
     var lastFocused = null;
+
+    var refreshItems = function () {
+      items = Array.prototype.slice.call(gallery.querySelectorAll('.gallery-item:not([hidden])'));
+      total = items.length;
+      if (current >= total) current = 0;
+    };
+
+    gallery.addEventListener('dv:gallery-update', refreshItems);
 
     var update = function () {
       var item = items[current];

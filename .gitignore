@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+bower_components/
+
+# Build & deploy artifacts
+dist/
+build/
+out/
+.netlify/
+.cache/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# Editors & IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary & backup files
+tmp/
+temp/
+*.tmp
+*.bak

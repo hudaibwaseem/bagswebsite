@@ -387,6 +387,121 @@ p {
   display: none;
 }
 
+.nav-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nav-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border: 0;
+  background: none;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #4c3a3e;
+  transition: color 0.3s var(--ease);
+}
+
+.nav-dropdown-toggle::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.3s var(--ease);
+}
+
+.nav-dropdown.is-open .nav-dropdown-toggle::after {
+  transform: rotate(225deg);
+}
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: -18px;
+  min-width: 232px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--white);
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), visibility 0.3s var(--ease);
+  z-index: 30;
+}
+
+.nav-dropdown.is-open .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.nav-dropdown-menu a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  color: #4c3a3e;
+}
+
+.nav-dropdown-menu a::after {
+  display: none;
+}
+
+.nav-dropdown-menu a:hover,
+.nav-dropdown-menu a:focus-visible {
+  background: var(--cream);
+  color: var(--burgundy);
+}
+
+.nav-dropdown-menu .nav-dropdown-all {
+  margin-bottom: 5px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid var(--line);
+  border-radius: 8px 8px 0 0;
+  font-weight: 600;
+  color: var(--burgundy);
+}
+
+.nav-dropdown-count {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+@media (min-width: 981px) {
+  .nav-dropdown:hover .nav-dropdown-toggle,
+  .nav-dropdown:focus-within .nav-dropdown-toggle {
+    color: var(--burgundy);
+  }
+
+  .nav-dropdown:hover .nav-dropdown-toggle::after,
+  .nav-dropdown:focus-within .nav-dropdown-toggle::after {
+    transform: rotate(225deg);
+  }
+
+  .nav-dropdown:hover .nav-dropdown-menu,
+  .nav-dropdown:focus-within .nav-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
 .header-actions {
   display: flex;
   align-items: center;
@@ -1982,6 +2097,48 @@ p {
   color: var(--rose-gold-light);
 }
 
+/* ---------- Bags by brand ---------- */
+.brand-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 34px;
+}
+
+.filter-btn {
+  padding: 10px 18px;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  background: var(--white);
+  color: var(--ink);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.filter-btn:hover {
+  border-color: var(--rose-gold);
+  color: var(--burgundy);
+}
+
+.filter-btn.is-active {
+  border-color: var(--burgundy);
+  background: var(--burgundy);
+  color: var(--white);
+}
+
+.gallery-item[hidden] {
+  display: none;
+}
+
+.gallery--bags .gallery-item img {
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center;
+}
+
 /* ---------- Lightbox ---------- */
 .lightbox {
   position: fixed;
@@ -2228,6 +2385,50 @@ p {
     height: 16px;
   }
 
+  .nav-dropdown {
+    display: block;
+  }
+
+  .nav-dropdown-toggle {
+    width: 100%;
+    justify-content: space-between;
+    padding: 15px 4px;
+    border-bottom: 1px solid rgba(234, 223, 217, 0.7);
+    font-size: 12px;
+  }
+
+  .nav-dropdown-menu {
+    position: static;
+    min-width: 0;
+    padding: 8px 0 8px 12px;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    display: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .nav-dropdown.is-open .nav-dropdown-menu {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .nav-dropdown-menu a {
+    padding: 11px 12px;
+    border-bottom: 1px solid rgba(234, 223, 217, 0.5);
+    font-size: 11px;
+  }
+
+  .nav-dropdown-menu .nav-dropdown-all {
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(234, 223, 217, 0.7);
+  }
+
   .header-inner {
     position: relative;
   }
@@ -2293,6 +2494,10 @@ p {
   }
 
   .gallery--proofs {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .gallery--bags {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -2670,6 +2875,11 @@ p {
   }
 
   .gallery--proofs {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .gallery--bags {
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
